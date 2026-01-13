@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/blocks", "destination": "/api/index.ts" },
+    { "source": "/balance/:address", "destination": "/api/index.ts" },
+    { "source": "/address/:address", "destination": "/api/index.ts" },
+    { "source": "/send", "destination": "/api/index.ts" },
+    { "source": "/consensus", "destination": "/api/index.ts" }
+  ]
+}
