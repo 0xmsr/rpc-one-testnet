@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { Blockchain } from "../blockchain";
-import { Transaction } from "../transaction";
+import { Blockchain } from "./blockchain";
+import { Transaction } from "./transaction";
 import { Block } from "../block";
 
 const app = express();
