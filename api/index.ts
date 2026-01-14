@@ -84,4 +84,8 @@ app.post("/consensus", (req: Request, res: Response) => {
   res.status(400).json({ error: "Invalid chain format" });
 });
 
+app.get("/", (req, res) => {
+  res.json({ status: "RPC Online", message: "Use /blocks to fetch data" });
+});
+
 export default app;
