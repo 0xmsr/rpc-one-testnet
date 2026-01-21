@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 let blockchainData: any[] = [];
+let stakingData: any = {};
 
 app.get("/", (req, res) => {
   res.json({ 
@@ -27,8 +28,20 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/status", (req, res) => {
+  res.json({
+    status: "online",
+    blocks: blockchainData.length,
+    timestamp: Date.now()
+  });
+});
+
 app.get("/blocks", (req, res) => {
   res.json(blockchainData);
+});
+
+app.get("/staking", (req, res) => {
+  res.json(stakingData);
 });
 
 app.get("/balance/:address", (req, res) => {
@@ -46,10 +59,15 @@ app.get("/balance/:address", (req, res) => {
 });
 
 app.post("/consensus", (req, res) => {
-  const { chain } = req.body;
+  const { chain, stakers } = req.body;
   if (Array.isArray(chain)) {
-    blockchainData = chain;
-    return res.json({ success: true, message: "Chain Synced" });
+    if (chain.length >= blockchainData.length) {
+      blockchainData = chain;
+      if (stakers) stakingData = stakers;
+      return res.json({ success: true, message: "Chain Synced" });
+    } else {
+      return res.json({ success: false, message: "Incoming chain shorter than current" });
+    }
   }
   res.status(400).json({ error: "Invalid chain format" });
 });
